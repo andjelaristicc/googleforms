@@ -183,7 +183,7 @@ form.addEventListener("submit", function(e){
         responseTime: Math.round(performance.now())
     };
 
-    fetch("YOUR_GOOGLE_SCRIPT_URL_HERE", {
+    fetch("https://script.google.com/macros/s/AKfycbyeXvn3cqHOUAKqnfW760yRA4CxejJ0OJiShXkTi-RthTM5luQbDfXI01TKmi8lJRBW/exec", {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" }
@@ -202,4 +202,5 @@ form.addEventListener("submit", function(e){
 
 </body>
 </html>
+
 
