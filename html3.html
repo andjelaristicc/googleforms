@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Roboto', sans-serif; background: #f2f2f2; margin:0; padding:0; }
+
+  /* Top progress bar */
+  .progress-bar { height: 6px; background: #d1c4e9; position: relative; margin: 0; }
+  .progress { height: 100%; background: #673ab7; width: 0%; transition: width 0.5s; }
+
+  /* Title container (small card) */
+  .title-container {
+    max-width: 700px;
+    margin: 30px auto 10px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 25px 20px 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  /* Google Forms style top line */
+  .form-top-line {
+    height: 8px;
+    background: #673ab7;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  h1 { font-weight: 500; color: #202124; font-size: 24px; margin-bottom: 15px; }
+  p.consent { font-size: 13px; color: #5f6368; margin-bottom: 0; }
+
+  /* Question card container */
+  .question-container {
+    max-width: 700px;
+    margin: 15px auto;
+    background: #fff;
+    padding: 20px 18px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s;
+  }
+
+  .question-container:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  .question-number { font-weight: 500; color: #673ab7; margin-bottom: 8px; }
+  label { display:block; font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 12px; }
+
+  input[type=text] { width:100%; padding:12px; border:1px solid #dadce0; border-radius:4px; font-size:16px; box-sizing: border-box; }
+  .option { margin-bottom: 10px; font-size: 15px; color: #202124; }
+  input[type=radio] { margin-right: 8px; accent-color: #673ab7; }
+
+  button { max-width: 700px; display:block; width:100%; padding:14px; background:#673ab7; border:none; border-radius:4px; color:#fff; font-size:16px; cursor:pointer; margin:20px auto 0; }
+  button:hover { background:#512da8; }
+  .success-msg { display:none; color:green; font-weight:500; margin-top:20px; text-align:center; }
+
+  /* Google Forms style footer */
+  .form-footer { 
+    text-align: center; 
+    font-size: 12px; 
+    color: #5f6368; 
+    margin-top: 25px; 
+    padding-top: 10px; 
+  }
+
+  @media (max-width: 480px) {
+    .title-container, .question-container { padding: 15px; margin: 10px; }
+    h1 { font-size: 20px; }
+    label { font-size: 15px; }
+    input[type=text] { font-size: 15px; padding:10px; }
+    button { font-size:15px; padding:12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top progress bar -->
+<div class="progress-bar">
+  <div class="progress" id="progress"></div>
+</div>
+
+<!-- Title container -->
+<div class="title-container">
+  <div class="form-top-line"></div>
+  <h1>Mini Quiz</h1>
+  <p class="consent">Before we start — consent: I understand this page will collect non-personal device info for a live demo.</p>
+</div>
+
+<form id="quizForm">
+  <!-- Question 1 -->
+  <div class="question-container">
+    <div class="question-number">Question 1</div>
+    <label for="q1">What is the most important thing in life for you?</label>
+    <input type="text" id="q1" name="Q1" required>
+  </div>
+
+  <!-- Question 2 -->
+  <div class="question-container">
+    <div class="question-number">Question 2</div>
+    <label>Choose one: what gives life the most meaning?</label>
+    <div class="option"><input type="radio" name="Q2" value="Relationships" required> Relationships</div>
+    <div class="option"><input type="radio" name="Q2" value="Success"> Success</div>
+    <div class="option"><input type="radio" name="Q2" value="Freedom"> Freedom</div>
+    <div class="option"><input type="radio" name="Q2" value="Happiness"> Happiness</div>
+  </div>
+
+  <!-- Question 3 -->
+  <div class="question-container">
+    <div class="question-number">Question 3</div>
+    <label for="q3">If you could instantly master one skill, what would it be?</label>
+    <input type="text" id="q3" name="Q3" placeholder="e.g., public speaking, video editing..." required>
+  </div>
+
+  <!-- Question 4 -->
+  <div class="question-container">
+    <div class="question-number">Question 4</div>
+    <label for="q4">One thing you cannot go a day without?</label>
+    <input type="text" id="q4" name="Q4" required>
+  </div>
+
+  <!-- Question 5 -->
+  <div class="question-container">
+    <div class="question-number">Question 5</div>
+    <label>Just for fun — which would you rather fight?</label>
+    <div class="option"><input type="radio" name="Q5" value="A horse-sized duck" required> A horse-sized duck</div>
+    <div class="option"><input type="radio" name="Q5" value="100 duck-sized horses"> 100 duck-sized horses</div>
+  </div>
+
+  <button type="submit">Submit</button>
+  <div class="success-msg">Thank you! Your responses have been submitted.</div>
+</form>
+
+<!-- Footer -->
+<div class="form-footer">Google Forms</div>
+
+<script>
+const progress = document.getElementById('progress');
+const totalQuestions = 5;
+const form = document.getElementById("quizForm");
+const questions = form.querySelectorAll(".question-container");
+
+// Update progress bar
+questions.forEach((q) => {
+  const inputs = q.querySelectorAll("input");
+  inputs.forEach(input => {
+    input.addEventListener("change", () => {
+      const answered = Array.from(questions).filter(q => q.querySelector("input:checked, input[type=text]:valid")).length;
+      progress.style.width = `${(answered/totalQuestions)*100}%`;
+    });
+  });
+});
+
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const Q1 = document.getElementById("q1").value;
+    const Q3 = document.getElementById("q3").value;
+    const Q4 = document.getElementById("q4").value;
+    const Q2 = document.querySelector('input[name="Q2"]:checked')?.value || "";
+    const Q5 = document.querySelector('input[name="Q5"]:checked')?.value || "";
+
+    const data = {
+        Q1, Q2, Q3, Q4, Q5,
+        browser: navigator.userAgentData?.brands?.map(b=>b.brand).join(", ") || navigator.appName,
+        os: navigator.userAgentData?.platform || navigator.platform,
+        deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop/Tablet",
+        resolution: window.screen.width + "x" + window.screen.height,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        language: navigator.language,
+        colorScheme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "Dark" : "Light",
+        connectionType: navigator.connection?.effectiveType || "unknown",
+        userAgent: navigator.userAgent,
+        responseTime: Math.round(performance.now())
+    };
+
+    fetch("YOUR_GOOGLE_SCRIPT_URL_HERE", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(res => {
+        document.querySelector(".success-msg").style.display = "block";
+        form.reset();
+        progress.style.width = "0%";
+    })
+    .catch(err => {
+        alert("Error submitting form. Please try again.");
+        console.error(err);
+    });
+});
+</script>
+
+</body>
+</html>
