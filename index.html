@@ -183,24 +183,23 @@ form.addEventListener("submit", function(e){
         responseTime: Math.round(performance.now())
     };
 
-fetch("https://formsproxy-cnk8c5eca-andjelaristic205-8834s-projects.vercel.app/submit", {
+fetch("https://sheetdb.io/api/v1/551vvcbjn3j6t", {
     method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: data })
 })
-.then(res => res.json())
-.then(resData => {
-    if(resData.result === "success"){
+.then(res => {
+    if (res.ok) {
         document.querySelector(".success-msg").style.display = "block";
         form.reset();
         progress.style.width = "0%";
     } else {
-        alert("Error submitting form: " + resData.message);
+        alert("Error submitting form.");
     }
 })
 .catch(err => {
     console.error(err);
-    alert("Error submitting form. Please try again.");
+    alert("Network error. Please try again.");
 });
 
 });
@@ -208,6 +207,7 @@ fetch("https://formsproxy-cnk8c5eca-andjelaristic205-8834s-projects.vercel.app/s
 
 </body>
 </html>
+
 
 
 
